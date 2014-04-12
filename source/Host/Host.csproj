@@ -93,6 +93,10 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\AspNetIdentity.AzureTableStorage\AspNetIdentity.AzureTableStorage.csproj">
+      <Project>{38a9e83c-b838-44ca-ac43-63378d2d6cad}</Project>
+      <Name>AspNetIdentity.AzureTableStorage</Name>
+    </ProjectReference>
     <ProjectReference Include="..\AspNetIdentity\AspNetIdentity.csproj">
       <Project>{35fb37da-28d5-4158-86a2-74d6275b842f}</Project>
       <Name>AspNetIdentity</Name>
