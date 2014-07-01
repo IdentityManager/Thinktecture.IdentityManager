@@ -3,7 +3,7 @@
 
 (function (angular) {
     var app = angular.module("app", ['ngRoute']);
-    app.config(function ($routeProvider) {
+    app.config(["$routeProvider", function ($routeProvider) {
         $routeProvider
             .when("/", {
                 controller: 'HomeCtrl',
@@ -24,9 +24,9 @@
             .otherwise({
                 redirectTo: '/'
             });
-    });
+    }]);
 
-    app.service("admin", function ($http, $q) {
+    app.service("admin", ["$http", "$q", function ($http, $q) {
         var admin;
 
         this.getCurrentAdmin = function () {
@@ -40,9 +40,9 @@
                 return admin;
             });
         };
-    });
+    }]);
 
-    app.service("meta", function ($http, $q) {
+    app.service("meta", ["$http", "$q", function ($http, $q) {
         var meta;
         this.getMetadata = function () {
             if (meta) {
@@ -55,9 +55,9 @@
                 return meta;
             });
         };
-    });
+    }]);
 
-    app.service("users", function ($http) {
+    app.service("users", ["$http", function ($http) {
         this.getUsers = function (filter, start, count) {
             return $http.get("api/users", { params: { filter: filter, start: start, count: count } })
                 .then(function (response) {
@@ -87,7 +87,7 @@
                 });
         };
         this.deleteUser = function (subject) {
-            return $http.post("api/users/delete", { subject:subject })
+            return $http.post("api/users/delete", { subject: subject })
                 .then(function (response) {
                 },
                 function (response) {
@@ -134,21 +134,21 @@
                     throw (response.data && response.data.message || "Error Removing Claim");
                 });
         };
-    });
+    }]);
 
-    app.controller("LayoutCtrl", function ($scope, admin) {
+    app.controller("LayoutCtrl", ["$scope", "admin", function ($scope, admin) {
         $scope.model = {};
 
         admin.getCurrentAdmin().then(function (data) {
             $scope.model.username = data.username;
         });
-    });
+    }]);
 
-    app.controller("HomeCtrl", function ($scope) {
+    app.controller("HomeCtrl", ["$scope", function ($scope) {
         $scope.model = {};
-    });
+    }]);
 
-    app.controller("ListUsersCtrl", function ($scope, users, $sce, $routeParams, $location) {
+    app.controller("ListUsersCtrl", ["$scope", "users", "$sce", "$routeParams", "$location", function ($scope, users, $sce, $routeParams, $location) {
         $scope.model = {};
 
         function PagerButton(text, page, enabled, current) {
@@ -175,7 +175,7 @@
             var totalButtons = 7; // ensure this is odd
             var pageSkip = 10;
             var startButton = 1;
-            if (this.currentPage > Math.floor(totalButtons/2)) startButton = this.currentPage - Math.floor(totalButtons/2);
+            if (this.currentPage > Math.floor(totalButtons / 2)) startButton = this.currentPage - Math.floor(totalButtons / 2);
 
             var endButton = startButton + totalButtons - 1;
             if (endButton >= this.totalPages) endButton = this.totalPages;
@@ -230,9 +230,9 @@
             $scope.model.message = error;
             $scope.model.waiting = false;
         });
-    });
+    }]);
 
-    app.controller("NewUserCtrl", function ($scope, users, meta) {
+    app.controller("NewUserCtrl", ["$scope", "users", "meta", function ($scope, users, meta) {
         $scope.model = {};
 
         meta.getMetadata().then(function (result) {
@@ -253,9 +253,9 @@
                     $scope.model.message = message;
                 });
         };
-    });
+    }]);
 
-    app.controller("EditUserCtrl", function ($scope, users, $routeParams) {
+    app.controller("EditUserCtrl", ["$scope", "users", "$routeParams", function ($scope, users, $routeParams) {
         $scope.model = {};
 
         function clear() {
@@ -348,5 +348,5 @@
                     error(message);
                 });
         };
-    });
+    }]);
 })(angular);
