@@ -39,7 +39,7 @@ namespace Thinktecture.IdentityManager.Host.IdSvr
                 Endpoints = new EndpointOptions {
                     EnableCspReportEndpoint = true
                 },
-                PublicHostName = "http://localhost:17457",
+                //PublicHostName = "http://localhost:17457",
                 RequireSsl = false,
                 Factory = factory,
                 CorsPolicy = CorsPolicy.AllowAll,

@@ -28,6 +28,7 @@ using Thinktecture.IdentityManager.Configuration;
 using Thinktecture.IdentityManager.Configuration.Hosting;
 using Thinktecture.IdentityManager.Configuration.Hosting.LocalAuthenticationMiddleware;
 using Thinktecture.IdentityModel.Owin.ScopeValidation;
+using Thinktecture.IdentityManager.Configuration.Hosting.RemoteAuthenticationMiddleware;
 
 namespace Owin
 {
@@ -49,6 +50,11 @@ namespace Owin
                 var local = new LocalAuthenticationOptions(options.AdminRoleName);
                 app.Use<LocalAuthenticationMiddleware>(local);
             }
+			else if(options.SecurityMode == SecurityMode.LocalAndRemote)
+			{
+			    var remote = new RemoteAuthenticationOptions(options.AdminRoleName);
+			    app.Use<RemoteAuthenticationMiddleware>(remote);
+			}
             else if (options.SecurityMode == SecurityMode.OAuth2)
             {
                 var jwtParams = new System.IdentityModel.Tokens.TokenValidationParameters

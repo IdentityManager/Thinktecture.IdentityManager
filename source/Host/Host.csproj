@@ -74,6 +74,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Thinktecture.IdentityServer.v3.1.0.0-pre-10111\lib\net45\Thinktecture.IdentityServer.dll</HintPath>
     </Reference>
+    <Reference Include="Thinktecture.IdentityServer3">
+      <HintPath>..\packages\Thinktecture.IdentityServer3.1.1.0\lib\net45\Thinktecture.IdentityServer3.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="..\default.licenseheader">

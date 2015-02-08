@@ -47,6 +47,10 @@ namespace Thinktecture.IdentityManager.Configuration
             {
                 config.Filters.Add(new HostAuthenticationAttribute(Constants.LocalAuthenticationType));
             }
+			else if (options.SecurityMode == SecurityMode.LocalAndRemote)
+			{
+			    config.Filters.Add(new HostAuthenticationAttribute(Constants.RemoteAuthenticationType));
+			}
             else
             {
                 config.Filters.Add(new HostAuthenticationAttribute(Constants.BearerAuthenticationType));

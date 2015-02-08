@@ -13,13 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- 
-namespace Thinktecture.IdentityManager.Configuration
-{
-    public enum SecurityMode
-    {
-        LocalMachine,
-        OAuth2,
-		LocalAndRemote
-    }
-}
+
+using Microsoft.Owin;
+using Microsoft.Owin.Security.Infrastructure;
+
+namespace Thinktecture.IdentityManager.Configuration.Hosting.RemoteAuthenticationMiddleware
+	{
+	public class RemoteAuthenticationMiddleware : AuthenticationMiddleware<RemoteAuthenticationOptions>
+		{
+		public RemoteAuthenticationMiddleware(OwinMiddleware next, RemoteAuthenticationOptions options)
+			: base(next, options)
+			{
+			}
+
+		protected override AuthenticationHandler<RemoteAuthenticationOptions> CreateHandler()
+			{
+			return new RemoteAuthenticationHandler();
+			}
+		}
+	}

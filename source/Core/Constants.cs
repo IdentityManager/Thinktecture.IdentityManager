@@ -19,6 +19,7 @@ namespace Thinktecture.IdentityManager
     public class Constants
     {
         public const string LocalAuthenticationType = "idmgr.local";
+		public const string RemoteAuthenticationType = "idmgr.remote";
         public const string BearerAuthenticationType = "Bearer";
 
         public const string IdMgrScope = "idmgr";

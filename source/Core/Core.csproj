@@ -147,6 +147,9 @@
     <Compile Include="Configuration\Hosting\LocalAuthenticationMiddleware\LocalAuthenticationMiddleware.cs" />
     <Compile Include="Configuration\Hosting\LocalAuthenticationMiddleware\LocalAuthenticationOptions.cs" />
     <Compile Include="Configuration\Hosting\LogProviderExceptionLogger.cs" />
+    <Compile Include="Configuration\Hosting\RemoteAuthenticationMiddleware\RemoteAuthenticationHandler.cs" />
+    <Compile Include="Configuration\Hosting\RemoteAuthenticationMiddleware\RemoteAuthenticationMiddleware.cs" />
+    <Compile Include="Configuration\Hosting\RemoteAuthenticationMiddleware\RemoteAuthenticationOptions.cs" />
     <Compile Include="Configuration\Hosting\TraceLogger.cs" />
     <Compile Include="Configuration\IdentityManagerServiceFactory.cs" />
     <Compile Include="Configuration\IDependencyResolver.cs" />
@@ -253,7 +256,9 @@
     </EmbeddedResource>
     <None Include="app.config" />
     <None Include="Assets\Scripts\Frame.js.bundle" />
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="..\default.licenseheader">
       <Link>default.licenseheader</Link>
     </None>

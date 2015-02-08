@@ -13,13 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- 
-namespace Thinktecture.IdentityManager.Configuration
-{
-    public enum SecurityMode
-    {
-        LocalMachine,
-        OAuth2,
-		LocalAndRemote
-    }
-}
+
+using Microsoft.Owin.Security;
+
+namespace Thinktecture.IdentityManager.Configuration.Hosting.RemoteAuthenticationMiddleware
+	{
+	public class RemoteAuthenticationOptions : AuthenticationOptions
+		{
+		public RemoteAuthenticationOptions(string roleToAssign)
+			: base(Constants.RemoteAuthenticationType)
+			{
+			this.RoleToAssign = roleToAssign;
+			}
+
+		public string RoleToAssign { get; private set; }
+		}
+	}
