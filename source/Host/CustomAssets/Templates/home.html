@@ -1,0 +1,15 @@
+﻿
+<div class="jumbotron">
+    <h1>
+        <img class="logo" ng-src="{{PathBase}}/assets/Content.logo.png">
+        Customised IdentityManager
+    </h1>
+    <p>Manage your identities.</p>
+    <div ng-show="layout.showLogin">
+        <button class="btn btn-primary btn-lg" ng-click="login()">Login</button>
+    </div>
+</div>
+
+<div ng-show="errors" class="alert alert-danger">
+    <strong>Error:</strong> {{errors[0]}}
+</div>

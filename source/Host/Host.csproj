@@ -102,6 +102,10 @@
     <Content Include="..\default.licenseheader">
       <Link>default.licenseheader</Link>
     </Content>
+    <EmbeddedResource Include="CustomAssets\Templates\home.html" />
+    <EmbeddedResource Include="CustomAssets\Templates\index.html" />
+    <Content Include="CustomAssets\Content.Bundle.min.css" />
+    <Content Include="CustomAssets\Scripts.Bundle.js" />
     <Content Include="packages.config">
       <SubType>Designer</SubType>
     </Content>

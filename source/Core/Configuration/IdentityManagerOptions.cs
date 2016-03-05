@@ -29,7 +29,8 @@ namespace IdentityManager.Configuration
         public IdentityManagerServiceFactory Factory { get; set; }
         public SecurityConfiguration SecurityConfiguration { get; set; }
         public bool DisableUserInterface { get; set; }
-        
+        public AssetConfiguration AssetConfiguration { get; set; }
+
         internal void Validate()
         {
             if (this.Factory == null)

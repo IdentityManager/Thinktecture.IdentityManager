@@ -1,0 +1,23 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Customised IdentityManager</title>
+    <link href="{pathBase}/CustomAssets/Content.Bundle.min.css" rel="stylesheet" />
+    <link rel="icon" type="image/x-icon" href="{pathBase}/CustomAssets/Content.favicon.ico" />
+    <link rel="shortcut icon" type="image/x-icon" href="{pathBase}/CustomAssets/Content.favicon.ico" />
+</head>
+<body lang="en" ng-app="ttIdmApp" ng-csp ng-controller="LayoutCtrl" ng-cloak>
+
+    <div ng-include="'{pathBase}/assets/Templates.navbar.html'"></div>
+
+    <div class="container" ng-cloak>
+        Customised <ng-view tt-focus></ng-view>
+    </div>
+
+    <script id="model" type="application/json">
+        {model}
+    </script>
+    <script src="{pathBase}/CustomAssets/Scripts.Bundle.js"></script>
+</body>
+</html>

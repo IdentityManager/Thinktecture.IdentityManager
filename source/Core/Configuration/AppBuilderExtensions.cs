@@ -25,6 +25,7 @@ using Microsoft.Owin.Infrastructure;
 using Microsoft.Owin.Logging;
 using Microsoft.Owin.StaticFiles;
 using System;
+using System.IO;
 
 namespace Owin
 {
@@ -63,16 +64,30 @@ namespace Owin
 
             if (!options.DisableUserInterface)
             {
-                app.UseFileServer(new FileServerOptions
+                if (options.AssetConfiguration.HostClientSideAssetDirectories &&
+                    !string.IsNullOrWhiteSpace(options.AssetConfiguration.HostedAssetRelativePath) &&
+                    !string.IsNullOrWhiteSpace(options.AssetConfiguration.HostedAssetRootFullPath) &&
+                    Directory.Exists(options.AssetConfiguration.HostedAssetRootFullPath))
                 {
-                    RequestPath = new PathString("/assets"),
-                    FileSystem = new EmbeddedResourceFileSystem(typeof(IdentityManagerAppBuilderExtensions).Assembly, "IdentityManager.Assets")
-                });
-                app.UseFileServer(new FileServerOptions
+                    app.UseFileServer(new FileServerOptions
+                    {
+                        RequestPath = new PathString(options.AssetConfiguration.HostedAssetRelativePath),
+                        FileSystem = new PhysicalFileSystem(options.AssetConfiguration.HostedAssetRootFullPath)
+                    });
+                }
+                if (options.AssetConfiguration.HostedAssetRelativePath != "/assets")
                 {
-                    RequestPath = new PathString("/assets/libs/fonts"),
-                    FileSystem = new EmbeddedResourceFileSystem(typeof(IdentityManagerAppBuilderExtensions).Assembly, "IdentityManager.Assets.Content.fonts")
-                });
+                    app.UseFileServer(new FileServerOptions
+                    {
+                        RequestPath = new PathString("/assets"),
+                        FileSystem = new EmbeddedResourceFileSystem(typeof (IdentityManagerAppBuilderExtensions).Assembly, "IdentityManager.Assets")
+                    });
+                    app.UseFileServer(new FileServerOptions
+                    {
+                        RequestPath = new PathString("/assets/libs/fonts"),
+                        FileSystem = new EmbeddedResourceFileSystem(typeof (IdentityManagerAppBuilderExtensions).Assembly, "IdentityManager.Assets.Content.fonts")
+                    });
+                }
                 app.UseStageMarker(PipelineStage.MapHandler);
             }
 

@@ -162,6 +162,7 @@
     <Compile Include="Configuration\Hosting\OAuthServerExtensions.cs" />
     <Compile Include="Configuration\Registration.cs" />
     <Compile Include="Configuration\SecurityConfiguration.cs" />
+    <Compile Include="Configuration\TemplateConfiguration.cs" />
     <Compile Include="Configuration\WebApiConfig.cs" />
     <Compile Include="Api\Controllers\MetaController.cs" />
     <Compile Include="Api\Controllers\UserController.cs" />
