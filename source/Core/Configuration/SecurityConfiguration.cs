@@ -32,7 +32,7 @@ namespace IdentityManager.Configuration
 
         public virtual bool? ShowLoginButton { get; set; }
 
-        internal SecurityConfiguration()
+        protected SecurityConfiguration()
         {
             RequireSsl = true;
             BearerAuthenticationType = Constants.BearerAuthenticationType;
