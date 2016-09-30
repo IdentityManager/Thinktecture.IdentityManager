@@ -166,6 +166,7 @@
     <Compile Include="Api\Controllers\MetaController.cs" />
     <Compile Include="Api\Controllers\UserController.cs" />
     <Compile Include="Constants.cs" />
+    <Compile Include="Core\ExternalLoginValue.cs" />
     <Compile Include="Core\Metadata\ExpressionPropertyMetadata.cs" />
     <Compile Include="Core\Metadata\ExecutablePropertyMetadata.cs" />
     <Compile Include="Core\Metadata\ReflectedPropertyMetadata.cs" />
@@ -256,6 +257,7 @@
     <EmbeddedResource Include="Resources\Messages.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Messages.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <None Include="app.config" />
     <None Include="packages.config" />

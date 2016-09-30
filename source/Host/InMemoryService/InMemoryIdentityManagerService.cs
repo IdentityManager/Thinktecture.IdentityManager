@@ -80,6 +80,7 @@ namespace IdentityManager.Host.InMemoryService
                         SupportsCreate = true,
                         SupportsDelete = true,
                         SupportsClaims = true,
+                        SupportsExternalLogins = true,
                         CreateProperties = createprops,
                         UpdateProperties = updateprops
                     },
@@ -479,6 +480,18 @@ namespace IdentityManager.Host.InMemoryService
 
             var result = SetRoleProperty(GetMetadata().RoleMetadata.UpdateProperties, role, type, value);
             return Task.FromResult(result);
+        }
+
+        public Task<IdentityManagerResult> AddUserExternalLoginAsync(string subject, string provider, string providerId)
+        {
+            // @todo(PQP)
+            throw new NotImplementedException();
+        }
+
+        public Task<IdentityManagerResult> RemoveUserExternalLoginAsync(string subject, string provider, string providerId)
+        {
+            // @todo(PQP)
+            throw new NotImplementedException();
         }
 
         private string GetRoleProperty(PropertyMetadata property, InMemoryRole role)

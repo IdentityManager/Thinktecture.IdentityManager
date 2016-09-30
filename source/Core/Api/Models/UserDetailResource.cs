@@ -134,6 +134,38 @@ namespace IdentityManager.Api.Models
                     }
                 };
             }
+
+
+            if (meta.UserMetadata.SupportsExternalLogins && user.ExternalLogins != null)
+            {
+                var externalLogins =
+                    from e in user.ExternalLogins.ToArray()
+                    select new
+                    {
+                        Data = e,
+                        Links = new
+                        {
+                            delete = url.Link(Constants.RouteNames.RemoveExternalLogin, new
+                            {
+                                subject = user.Subject,
+                                provider = e.Provider.ToBase64UrlEncoded(),
+                                providerId = e.ProviderId.ToBase64UrlEncoded()
+                            })
+                        }
+                    };
+
+                this["ExternalLogins"] = new
+                {
+                    Data = externalLogins.ToArray(),
+                    Links = new
+                    {
+                        create = url.Link(Constants.RouteNames.AddExternalLogin, new { subject = user.Subject })
+                    }
+                };
+            }
+
+
+
         }
     }
 }

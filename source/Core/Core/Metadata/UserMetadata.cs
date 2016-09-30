@@ -30,6 +30,7 @@ namespace IdentityManager
         public bool SupportsCreate { get; set; }
         public bool SupportsDelete { get; set; }
         public bool SupportsClaims { get; set; }
+        public bool SupportsExternalLogins { get; set; }
 
         public IEnumerable<PropertyMetadata> CreateProperties { get; set; }
         public IEnumerable<PropertyMetadata> UpdateProperties { get; set; }

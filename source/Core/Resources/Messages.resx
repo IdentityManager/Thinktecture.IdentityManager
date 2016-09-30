@@ -138,6 +138,15 @@
   <data name="EmailRequired" xml:space="preserve">
     <value>Email is required.</value>
   </data>
+  <data name="ExternalLoginDataRequired" xml:space="preserve">
+    <value>External Login data required.</value>
+  </data>
+  <data name="ExternalLoginProviderIdRequired" xml:space="preserve">
+    <value>External Login provider ID is required.</value>
+  </data>
+  <data name="ExternalLoginProviderRequired" xml:space="preserve">
+    <value>External Login provider is required.</value>
+  </data>
   <data name="InvalidBoolean" xml:space="preserve">
     <value>{0} is not a valid boolen.</value>
   </data>

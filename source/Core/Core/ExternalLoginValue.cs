@@ -13,15 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- 
-using System.Collections.Generic;
 
+using IdentityManager.Resources;
+using System.ComponentModel.DataAnnotations;
 namespace IdentityManager
 {
-    public class UserDetail : UserSummary
+    public class ExternalLoginValue
     {
-        public IEnumerable<PropertyValue> Properties { get; set; }
-        public IEnumerable<ClaimValue> Claims { get; set; }
-        public IEnumerable<ExternalLoginValue> ExternalLogins { get; set; }
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "ExternalLoginProviderRequired")]
+        public string Provider { get; set; }
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "ExternalLoginProviderIdRequired")]
+        public string ProviderId { get; set; }
     }
 }
