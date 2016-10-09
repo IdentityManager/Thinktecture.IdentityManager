@@ -96,34 +96,48 @@
                 </tr>
             </table>
         </div>
-    </div>
+        <div class="tab-pane {{tab==3?'active':''}}" ng-show="user.data.externalLogins">
 
-    <div class="tab-pane {{tab==3?'active':''}}" ng-show="user.data.externalLogins">
-
-        <div class="row">
-            <div ng-hide="user.data.externalLogins.data.length" class="col-sm-8">
-                <div class="alert alert-info">
-                    <p>No External Logins For User</p>
+            <div class="row section">
+                <div class="col-sm-12">
+                    <form name="addExternalLoginForm" class="form-inline" ng-submit="addExternalLogin(user.data.externalLogins, externalLogin)">
+                        <div class="form-group">
+                            <label for="type" class="column">Add External Login</label>
+                            <input type="text" class="form-control user-edit-regular" id="provider" placeholder="Provider" required autofocus ng-model="externalLogin.provider">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control user-edit-regular" id="providerid" placeholder="Provider ID" required ng-model="externalLogin.providerId">
+                        </div>
+                        <button type="submit" class="btn btn-primary" ng-disabled="addExternalLoginForm.$invalid">Add</button>
+                    </form>
                 </div>
             </div>
-        </div>
 
-        <table class="table table-condensed table-responsive table-striped xtable-bordered" ng-show="user.data.externalLogins.data.length">
-            <thead>
-                <tr>
-                    <th></th>
-                    <th>Provider</th>
-                    <th>Provider ID</th>
+            <div class="row">
+                <div ng-hide="user.data.externalLogins.data.length" class="col-sm-8">
+                    <div class="alert alert-info">
+                        <p>No External Logins For User</p>
+                    </div>
+                </div>
+            </div>
+
+            <table class="table table-condensed table-responsive table-striped xtable-bordered" ng-show="user.data.externalLogins.data.length">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Provider</th>
+                        <th>Provider ID</th>
+                    </tr>
+                </thead>
+                <tr ng-repeat="externalLogin in user.data.externalLogins.data">
+                    <td>
+                        <button class="btn btn-warning btn-xs" ng-click="removeExternalLogin(externalLogin)">delete</button>
+                    </td>
+                    <td>{{externalLogin.data.provider}}</td>
+                    <td>{{externalLogin.data.providerId}}</td>
                 </tr>
-            </thead>
-            <tr ng-repeat="externalLogin in user.data.externalLogins.data">
-                <td>
-                    <button class="btn btn-warning btn-xs" ng-click="removeExternalLogin(externalLogin)">delete</button>
-                </td>
-                <td>{{externalLogin.data.provider}}</td>
-                <td>{{externalLogin.data.providerId}}</td>
-            </tr>
-        </table>
+            </table>
+        </div>
     </div>
 
     <div class="row section" ng-show="user.links.delete">
