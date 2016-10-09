@@ -24,26 +24,26 @@ namespace IdentityManager.Extensions
     {
         public static bool HasValue(this IEnumerable<ExternalLoginValue> externalLogins, string provider, string providerId)
         {
-            if (externalLogins == null) throw new ArgumentNullException(nameof(provider));
-            if (String.IsNullOrWhiteSpace(provider)) throw new ArgumentNullException(nameof(provider));
-            if (String.IsNullOrWhiteSpace(providerId)) throw new ArgumentNullException(nameof(providerId));
+            if (externalLogins == null) throw new ArgumentNullException("provider");
+            if (String.IsNullOrWhiteSpace(provider)) throw new ArgumentNullException("provider");
+            if (String.IsNullOrWhiteSpace(providerId)) throw new ArgumentNullException("providerId");
 
             return externalLogins.Any(x => x.Provider == provider && x.ProviderId == providerId);
         }
 
         public static bool HasExternalLoginValue(this IEnumerable<ExternalLoginValue> externalLogins, string provider)
         {
-            if (externalLogins == null) throw new ArgumentNullException(nameof(provider));
-            if (String.IsNullOrWhiteSpace(provider)) throw new ArgumentNullException(nameof(provider));
+            if (externalLogins == null) throw new ArgumentNullException("provider");
+            if (String.IsNullOrWhiteSpace(provider)) throw new ArgumentNullException("provider");
 
             return externalLogins.Any(x => x.Provider == provider);
         }
 
         public static void AddExternalLogin(this ICollection<ExternalLoginValue> externalLogins, string provider, string providerId)
         {
-            if (externalLogins == null) throw new ArgumentNullException(nameof(provider));
-            if (String.IsNullOrWhiteSpace(provider)) throw new ArgumentNullException(nameof(provider));
-            if (String.IsNullOrWhiteSpace(providerId)) throw new ArgumentNullException(nameof(providerId));
+            if (externalLogins == null) throw new ArgumentNullException("provider");
+            if (String.IsNullOrWhiteSpace(provider)) throw new ArgumentNullException("provider");
+            if (String.IsNullOrWhiteSpace(providerId)) throw new ArgumentNullException("providerId");
 
             if (!externalLogins.HasValue(provider, providerId))
             {
@@ -53,9 +53,9 @@ namespace IdentityManager.Extensions
 
         public static void RemoveExternalLogin(this ICollection<ExternalLoginValue> externalLogins, string provider, string providerId)
         {
-            if (externalLogins == null) throw new ArgumentNullException(nameof(provider));
-            if (String.IsNullOrWhiteSpace(provider)) throw new ArgumentNullException(nameof(provider));
-            if (String.IsNullOrWhiteSpace(providerId)) throw new ArgumentNullException(nameof(providerId));
+            if (externalLogins == null) throw new ArgumentNullException("provider");
+            if (String.IsNullOrWhiteSpace(provider)) throw new ArgumentNullException("provider");
+            if (String.IsNullOrWhiteSpace(providerId)) throw new ArgumentNullException("providerId");
 
             foreach (var externalLogin in externalLogins.Where(x => x.Provider == provider && x.ProviderId == providerId).ToArray())
             {
@@ -65,8 +65,8 @@ namespace IdentityManager.Extensions
 
         public static void RemoveExternalLogins(this ICollection<ExternalLoginValue> externalLogins, string provider)
         {
-            if (externalLogins == null) throw new ArgumentNullException(nameof(provider));
-            if (String.IsNullOrWhiteSpace(provider)) throw new ArgumentNullException(nameof(provider));
+            if (externalLogins == null) throw new ArgumentNullException("provider");
+            if (String.IsNullOrWhiteSpace(provider)) throw new ArgumentNullException("provider");
 
             var found = externalLogins.Where(x => x.Provider == provider).ToArray();
             foreach (var externalLogin in found)
@@ -77,9 +77,9 @@ namespace IdentityManager.Extensions
 
         public static void RemoveExternalLogins(this ICollection<ExternalLoginValue> externalLogins, string provider, string providerId)
         {
-            if (externalLogins == null) throw new ArgumentNullException(nameof(provider));
-            if (String.IsNullOrWhiteSpace(provider)) throw new ArgumentNullException(nameof(provider));
-            if (String.IsNullOrWhiteSpace(providerId)) throw new ArgumentNullException(nameof(providerId));
+            if (externalLogins == null) throw new ArgumentNullException("provider");
+            if (String.IsNullOrWhiteSpace(provider)) throw new ArgumentNullException("provider");
+            if (String.IsNullOrWhiteSpace(providerId)) throw new ArgumentNullException("providerId");
 
             var found = externalLogins.Where(x => x.Provider == provider && x.ProviderId == providerId).ToArray();
             foreach (var externalLogin in found)
