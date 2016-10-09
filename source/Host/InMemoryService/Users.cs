@@ -61,6 +61,9 @@ namespace IdentityManager.Host.InMemoryService
                     Username = GenName().ToLower()
                 };
                 user.Claims.Add(new Claim("name", GenName() + " " + GenName()));
+
+                user.ExternalLogins.Add(new ExternalLoginValue { Provider = "Test ExternalProvider", ProviderId = GenName() });
+
                 users.Add(user);
             }
 

@@ -205,13 +205,16 @@ namespace IdentityManager.Host.InMemoryService
 
             var claims = user.Claims.Select(x => new ClaimValue { Type = x.Type, Value = x.Value });
 
+            var externalLogins = user.ExternalLogins.ToList();
+
             return Task.FromResult(new IdentityManagerResult<UserDetail>(new UserDetail
             {
                 Subject = user.Subject,
                 Username = user.Username,
                 Name = user.Claims.GetValue(Constants.ClaimTypes.Name),
                 Properties = props,
-                Claims = claims
+                Claims = claims,
+                ExternalLogins = externalLogins
             }));
         }
 

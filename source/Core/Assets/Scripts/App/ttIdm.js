@@ -171,6 +171,15 @@
                     .then(nop, errorHandler("Error Removing Claim"));
             };
 
+            svc.addExternalLogin = function (externalLogins, externalLogin) {
+                return $http.post(externalLogins.links.create, externalLogin)
+                    .then(nop, errorHandler("Error Adding External Login"));
+            };
+            svc.removeExternalLogin = function (externalLogin) {
+                return $http.delete(externalLogin.links.delete)
+                    .then(nop, errorHandler("Error Removing External Login"));
+            };
+
             svc.addRole = function (role) {
                 return $http.post(role.links.add)
                     .then(nop, errorHandler("Error Adding Role"));
