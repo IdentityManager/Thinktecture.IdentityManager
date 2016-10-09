@@ -487,14 +487,28 @@ namespace IdentityManager.Host.InMemoryService
 
         public Task<IdentityManagerResult> AddUserExternalLoginAsync(string subject, string provider, string providerId)
         {
-            // @todo(PQP)
-            throw new NotImplementedException();
+            var user = users.SingleOrDefault(x => x.Subject == subject);
+            if (user == null)
+            {
+                return Task.FromResult(new IdentityManagerResult("No user found"));
+            }
+
+            user.ExternalLogins.AddExternalLogin(provider, providerId);
+
+            return Task.FromResult(IdentityManagerResult.Success);
         }
 
         public Task<IdentityManagerResult> RemoveUserExternalLoginAsync(string subject, string provider, string providerId)
         {
-            // @todo(PQP)
-            throw new NotImplementedException();
+            var user = users.SingleOrDefault(x => x.Subject == subject);
+            if (user == null)
+            {
+                return Task.FromResult(new IdentityManagerResult("No user found"));
+            }
+
+            user.ExternalLogins.RemoveExternalLogins(provider, providerId);
+
+            return Task.FromResult(IdentityManagerResult.Success);
         }
 
         private string GetRoleProperty(PropertyMetadata property, InMemoryRole role)

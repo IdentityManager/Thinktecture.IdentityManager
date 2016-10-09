@@ -181,6 +181,7 @@
     <Compile Include="Core\RoleDetail.cs" />
     <Compile Include="Core\UserDetail.cs" />
     <Compile Include="Core\RoleSummary.cs" />
+    <Compile Include="Extensions\ExternalLoginExtensions.cs" />
     <Compile Include="Extensions\ClaimsExtensions.cs" />
     <Compile Include="Extensions\ModelStateDictionaryExtensions.cs" />
     <Compile Include="Extensions\IdentityManagerResultExtensions.cs" />
