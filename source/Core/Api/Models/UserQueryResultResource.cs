@@ -17,6 +17,7 @@
 using System;
 using System.Collections.Generic;
 using System.Web.Http.Routing;
+using AutoMapper;
 
 namespace IdentityManager.Api.Models
 {
@@ -44,12 +45,16 @@ namespace IdentityManager.Api.Models
 
     public class UserQueryResultResourceData : QueryResult<UserSummary>
     {
+        public static IMapper Mapper { get; set; }
         static UserQueryResultResourceData()
         {
-            AutoMapper.Mapper.CreateMap<QueryResult<UserSummary>, UserQueryResultResourceData>()
-                .ForMember(x => x.Items, opts => opts.MapFrom(x => x.Items));
-            AutoMapper.Mapper.CreateMap<UserSummary, UserResultResource>()
-                .ForMember(x => x.Data, opts => opts.MapFrom(x => x));
+            Mapper = new MapperConfiguration(config =>
+            {
+                config.CreateMap<QueryResult<UserSummary>, UserQueryResultResourceData>()
+                    .ForMember(x => x.Items, opts => opts.MapFrom(x => x.Items));
+                config.CreateMap<UserSummary, UserResultResource>()
+                    .ForMember(x => x.Data, opts => opts.MapFrom(x => x));
+            }).CreateMapper();
         }
 
         public UserQueryResultResourceData(QueryResult<UserSummary> result, UrlHelper url, UserMetadata meta)
@@ -58,7 +63,7 @@ namespace IdentityManager.Api.Models
             if (url == null) throw new ArgumentNullException("url");
             if (meta == null) throw new ArgumentNullException("meta");
 
-            AutoMapper.Mapper.Map(result, this);
+            Mapper.Map(result, this);
 
             foreach (var user in this.Items)
             {
