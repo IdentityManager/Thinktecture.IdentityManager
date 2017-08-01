@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+using System.Linq;
 using IdentityManager.Configuration;
 using System.Net.Http;
 using System.Text;
@@ -24,18 +25,18 @@ namespace IdentityManager.Assets
 {
     class EmbeddedHtmlResult : IHttpActionResult
     {
+        IdentityManagerOptions idmConfig;
         string path;
         string file;
         string authorization_endpoint;
-        SecurityConfiguration securityConfiguration;
 
-        public EmbeddedHtmlResult(HttpRequestMessage request, string file, SecurityConfiguration securityConfiguration)
+        public EmbeddedHtmlResult(HttpRequestMessage request, string file, IdentityManagerOptions idmConfig)
         {
             var pathbase = request.GetOwinContext().Request.PathBase;
             this.path = pathbase.Value;
             this.file = file;
             this.authorization_endpoint = pathbase + Constants.AuthorizePath;
-            this.securityConfiguration = securityConfiguration;
+            this.idmConfig = idmConfig;
         }
 
         public Task<System.Net.Http.HttpResponseMessage> ExecuteAsync(System.Threading.CancellationToken cancellationToken)
@@ -46,12 +47,13 @@ namespace IdentityManager.Assets
         public HttpResponseMessage GetResponseMessage()
         {
             var html = AssetManager.LoadResourceString(this.file,
+                idmConfig.AssetConfiguration,
                 new {
                     pathBase = this.path,
                     model = Newtonsoft.Json.JsonConvert.SerializeObject(new
                     {
                         PathBase = this.path,
-                        ShowLoginButton = this.securityConfiguration.ShowLoginButton,
+                        ShowLoginButton = this.idmConfig.SecurityConfiguration.ShowLoginButton,
                         oauthSettings = new
                         {
                             authorization_endpoint = this.authorization_endpoint,

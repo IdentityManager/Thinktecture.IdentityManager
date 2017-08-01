@@ -31,8 +31,8 @@ using System.Threading.Tasks;
 using System.IdentityModel.Tokens;
 using Microsoft.Owin.Security.Cookies;
 
-//[assembly: OwinStartup(typeof(StartupWithLocalhostSecurity))]
-[assembly: OwinStartup(typeof(StartupWithHostCookiesSecurity))]
+[assembly: OwinStartup(typeof(StartupWithLocalhostSecurity))]
+// [assembly: OwinStartup(typeof(StartupWithHostCookiesSecurity))]
 
 namespace IdentityManager.Host
 {
@@ -56,9 +56,23 @@ namespace IdentityManager.Host
                 factory.Register(new Registration<ICollection<InMemoryRole>>(roles));
                 factory.IdentityManagerService = new Registration<IIdentityManagerService, InMemoryIdentityManagerService>();
 
+                var customisedAssetsRelativePath = "/CustomAssets";
+
                 idm.UseIdentityManager(new IdentityManagerOptions
                 {
                     Factory = factory,
+                    DisableUserInterface = false,
+                    AssetConfiguration = new AssetConfiguration()
+                    {
+                        HostClientSideAssetDirectories = true,
+                        HostedAssetRelativePath = customisedAssetsRelativePath,
+                        HostedAssetRootFullPath = System.Web.Hosting.HostingEnvironment.MapPath(customisedAssetsRelativePath),
+                        ReplacementAssetStaticFileMap = new[]
+                        {
+                            new AssetMap() {EmbeddedAssetName = "IdentityManager.Assets.Templates.index.html", HostedRelativePath = "Templates/index.html"},
+                            new AssetMap() {EmbeddedAssetName = "IdentityManager.Assets.Templates.home.html", HostedRelativePath = "Templates/home.html"},
+                        }
+                    }
                 });
             });
         }

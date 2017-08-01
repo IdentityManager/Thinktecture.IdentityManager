@@ -13,34 +13,48 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- 
+
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
+using System.Linq;
+using IdentityManager.Configuration;
 
 namespace IdentityManager.Assets
 {
     class AssetManager
     {
         static ConcurrentDictionary<string, string> ResourceStrings = new ConcurrentDictionary<string, string>();
-        internal static string LoadResourceString(string name)
+        internal static string LoadResourceString(string name, AssetConfiguration config)
         {
             string value;
             if (!ResourceStrings.TryGetValue(name, out value))
             {
-                var assembly = typeof(AssetManager).Assembly;
-                using (var sr = new StreamReader(assembly.GetManifestResourceStream(name)))
+                var replacementFileMap = config.ReplacementAssetStaticFileMap.First(x => string.Equals(x.EmbeddedAssetName, name, StringComparison.CurrentCultureIgnoreCase));
+                var replacementFilePath = (replacementFileMap != null) ? Path.Combine(config.HostedAssetRootFullPath,replacementFileMap.HostedRelativePath) : null;
+                
+                if (!string.IsNullOrWhiteSpace(replacementFilePath) && File.Exists(new Uri(replacementFilePath).LocalPath))
                 {
-                    ResourceStrings[name] = value = sr.ReadToEnd();
+                    value = File.ReadAllText(replacementFilePath);
                 }
+                else
+                {
+                    var assembly = typeof(AssetManager).Assembly;
+                    using (var sr = new StreamReader(assembly.GetManifestResourceStream(name)))
+                    {
+                        value = sr.ReadToEnd();
+                    }
+                }
+                ResourceStrings[name] = value;
             }
             return value;
         }
 
-        internal static string LoadResourceString(string name, IDictionary<string, object> values)
+        internal static string LoadResourceString(string name, AssetConfiguration config, IDictionary<string, object> values)
         {
-            string value = LoadResourceString(name);
+            string value = LoadResourceString(name, config);
             foreach(var key in values.Keys)
             {
                 var val = values[key];
@@ -49,9 +63,9 @@ namespace IdentityManager.Assets
             return value;
         }
         
-        internal static string LoadResourceString(string name, object values)
+        internal static string LoadResourceString(string name, AssetConfiguration config,  object values)
         {
-            return LoadResourceString(name, Map(values));
+            return LoadResourceString(name, config, Map(values));
         }
 
         static IDictionary<string, object> Map(object values)
