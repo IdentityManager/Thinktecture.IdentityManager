@@ -43,5 +43,6 @@ namespace IdentityManager
         Task<IdentityManagerResult<RoleDetail>> GetRoleAsync(string subject);
 
         Task<IdentityManagerResult> SetRolePropertyAsync(string subject, string type, string value);
+        Task<IdentityManagerResult> ResetPasswordAsync(string subject, string token, string newPassword);
     }
 }
