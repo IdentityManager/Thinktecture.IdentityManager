@@ -43,5 +43,9 @@ namespace IdentityManager
         Task<IdentityManagerResult<RoleDetail>> GetRoleAsync(string subject);
 
         Task<IdentityManagerResult> SetRolePropertyAsync(string subject, string type, string value);
+
+        // external logins
+        Task<IdentityManagerResult> AddUserExternalLoginAsync(string subject, string provider, string providerId);
+        Task<IdentityManagerResult> RemoveUserExternalLoginAsync(string subject, string provider, string providerId);
     }
 }

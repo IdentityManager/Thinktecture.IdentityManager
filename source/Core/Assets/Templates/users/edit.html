@@ -18,6 +18,7 @@
         <li class="{{!tab ?'active':''}}" ng-show="user.data.properties"><a ng-click="tab=0" href="#/users/edit/{{user.data.subject}}" role="tab" data-toggle="tab">Properties</a></li>
         <li class="{{tab==1?'active':''}}" ng-show="user.data.roles"><a ng-click="tab=1" href="#/users/edit/{{user.data.subject}}" role="tab" data-toggle="tab">Roles</a></li>
         <li class="{{tab==2?'active':''}}" ng-show="user.data.claims"><a ng-click="tab=2" href="#/users/edit/{{user.data.subject}}" role="tab" data-toggle="tab">Claims</a></li>
+        <li class="{{tab==3?'active':''}}" ng-show="user.data.externalLogins"><a ng-click="tab=3" href="#/users/edit/{{user.data.subject}}" role="tab" data-toggle="tab">External Logins</a></li>
     </ul>
 
     <div class="tab-content">
@@ -92,6 +93,48 @@
                     </td>
                     <td>{{claim.data.type}}</td>
                     <td>{{claim.data.value}}</td>
+                </tr>
+            </table>
+        </div>
+        <div class="tab-pane {{tab==3?'active':''}}" ng-show="user.data.externalLogins">
+
+            <div class="row section">
+                <div class="col-sm-12">
+                    <form name="addExternalLoginForm" class="form-inline" ng-submit="addExternalLogin(user.data.externalLogins, externalLogin)">
+                        <div class="form-group">
+                            <label for="type" class="column">Add External Login</label>
+                            <input type="text" class="form-control user-edit-regular" id="provider" placeholder="Provider" required autofocus ng-model="externalLogin.provider">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control user-edit-regular" id="providerid" placeholder="Provider ID" required ng-model="externalLogin.providerId">
+                        </div>
+                        <button type="submit" class="btn btn-primary" ng-disabled="addExternalLoginForm.$invalid">Add</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="row">
+                <div ng-hide="user.data.externalLogins.data.length" class="col-sm-8">
+                    <div class="alert alert-info">
+                        <p>No External Logins For User</p>
+                    </div>
+                </div>
+            </div>
+
+            <table class="table table-condensed table-responsive table-striped xtable-bordered" ng-show="user.data.externalLogins.data.length">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Provider</th>
+                        <th>Provider ID</th>
+                    </tr>
+                </thead>
+                <tr ng-repeat="externalLogin in user.data.externalLogins.data">
+                    <td>
+                        <button class="btn btn-warning btn-xs" ng-click="removeExternalLogin(externalLogin)">delete</button>
+                    </td>
+                    <td>{{externalLogin.data.provider}}</td>
+                    <td>{{externalLogin.data.providerId}}</td>
                 </tr>
             </table>
         </div>

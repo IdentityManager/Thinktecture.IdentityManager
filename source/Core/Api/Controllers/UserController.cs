@@ -277,6 +277,68 @@ namespace IdentityManager.Api.Models.Controllers
             return BadRequest(result.ToError());
         }
 
+        [HttpPost, Route("{subject}/externallogins", Name = Constants.RouteNames.AddExternalLogin)]
+        public async Task<IHttpActionResult> AddExternalLoginAsync(string subject, ExternalLoginValue model)
+        {
+            var meta = await GetMetadataAsync();
+            if (!meta.UserMetadata.SupportsExternalLogins)
+            {
+                return MethodNotAllowed();
+            }
+
+            if (String.IsNullOrWhiteSpace(subject))
+            {
+                ModelState["subject.String"].Errors.Clear();
+                ModelState.AddModelError("", Messages.SubjectRequired);
+            }
+
+            if (model == null)
+            {
+                ModelState.AddModelError("", Messages.ExternalLoginDataRequired);
+            }
+
+            if (ModelState.IsValid)
+            {
+                var result = await this.idmService.AddUserExternalLoginAsync(subject, model.Provider, model.ProviderId);
+                if (result.IsSuccess)
+                {
+                    return NoContent();
+                }
+
+                ModelState.AddErrors(result);
+            }
+
+            return BadRequest(ModelState.ToError());
+        }
+
+        [HttpDelete, Route("{subject}/externallogins/{provider}/{providerid}", Name = Constants.RouteNames.RemoveExternalLogin)]
+        public async Task<IHttpActionResult> RemoveExternalLoginAsync(string subject, string provider, string providerid)
+        {
+            provider = provider.FromBase64UrlEncoded();
+            providerid = providerid.FromBase64UrlEncoded();
+
+            var meta = await GetMetadataAsync();
+            if (!meta.UserMetadata.SupportsExternalLogins)
+            {
+                return MethodNotAllowed();
+            }
+
+            if (String.IsNullOrWhiteSpace(subject) ||
+                String.IsNullOrWhiteSpace(provider) ||
+                String.IsNullOrWhiteSpace(providerid))
+            {
+                return NotFound();
+            }
+
+            var result = await this.idmService.RemoveUserExternalLoginAsync(subject, provider, providerid);
+            if (result.IsSuccess)
+            {
+                return NoContent();
+            }
+
+            return BadRequest(result.ToError());
+        }
+
         [HttpPost, Route("{subject}/roles/{role}", Name = Constants.RouteNames.AddRole)]
         public async Task<IHttpActionResult> AddRoleAsync(string subject, string role)
         {

@@ -68,6 +68,9 @@ namespace IdentityManager
             public const string DeleteRole = "DeleteRole ";
             public const string UpdateRoleProperty = "UpdateRoleProperty";
 
+            public const string AddExternalLogin = "AddExternalLogin";
+            public const string RemoveExternalLogin = "RemoveExternalLogin";
+
             public const string Home = "Home";
             public const string Logout = "Logout";
             public const string OAuthFrameCallback = "FrameCallback";

@@ -26,6 +26,7 @@ namespace IdentityManager.Host.InMemoryService
         public InMemoryUserBase()
         {
             Claims = new HashSet<Claim>();
+            ExternalLogins = new List<ExternalLoginValue>();
             Subject = Guid.NewGuid().ToString();
         }
 
@@ -43,6 +44,8 @@ namespace IdentityManager.Host.InMemoryService
         public string Mobile { get; set; }
 
         public ICollection<Claim> Claims { get; set; }
+
+        public ICollection<ExternalLoginValue> ExternalLogins { get; set; }
     }
 
     public class InMemoryUser : InMemoryUserBase

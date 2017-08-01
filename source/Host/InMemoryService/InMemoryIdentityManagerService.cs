@@ -80,6 +80,7 @@ namespace IdentityManager.Host.InMemoryService
                         SupportsCreate = true,
                         SupportsDelete = true,
                         SupportsClaims = true,
+                        SupportsExternalLogins = true,
                         CreateProperties = createprops,
                         UpdateProperties = updateprops
                     },
@@ -204,13 +205,16 @@ namespace IdentityManager.Host.InMemoryService
 
             var claims = user.Claims.Select(x => new ClaimValue { Type = x.Type, Value = x.Value });
 
+            var externalLogins = user.ExternalLogins.ToList();
+
             return Task.FromResult(new IdentityManagerResult<UserDetail>(new UserDetail
             {
                 Subject = user.Subject,
                 Username = user.Username,
                 Name = user.Claims.GetValue(Constants.ClaimTypes.Name),
                 Properties = props,
-                Claims = claims
+                Claims = claims,
+                ExternalLogins = externalLogins
             }));
         }
 
@@ -479,6 +483,32 @@ namespace IdentityManager.Host.InMemoryService
 
             var result = SetRoleProperty(GetMetadata().RoleMetadata.UpdateProperties, role, type, value);
             return Task.FromResult(result);
+        }
+
+        public Task<IdentityManagerResult> AddUserExternalLoginAsync(string subject, string provider, string providerId)
+        {
+            var user = users.SingleOrDefault(x => x.Subject == subject);
+            if (user == null)
+            {
+                return Task.FromResult(new IdentityManagerResult("No user found"));
+            }
+
+            user.ExternalLogins.AddExternalLogin(provider, providerId);
+
+            return Task.FromResult(IdentityManagerResult.Success);
+        }
+
+        public Task<IdentityManagerResult> RemoveUserExternalLoginAsync(string subject, string provider, string providerId)
+        {
+            var user = users.SingleOrDefault(x => x.Subject == subject);
+            if (user == null)
+            {
+                return Task.FromResult(new IdentityManagerResult("No user found"));
+            }
+
+            user.ExternalLogins.RemoveExternalLogins(provider, providerId);
+
+            return Task.FromResult(IdentityManagerResult.Success);
         }
 
         private string GetRoleProperty(PropertyMetadata property, InMemoryRole role)

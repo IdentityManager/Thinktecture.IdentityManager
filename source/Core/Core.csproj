@@ -166,6 +166,7 @@
     <Compile Include="Api\Controllers\MetaController.cs" />
     <Compile Include="Api\Controllers\UserController.cs" />
     <Compile Include="Constants.cs" />
+    <Compile Include="Core\ExternalLoginValue.cs" />
     <Compile Include="Core\Metadata\ExpressionPropertyMetadata.cs" />
     <Compile Include="Core\Metadata\ExecutablePropertyMetadata.cs" />
     <Compile Include="Core\Metadata\ReflectedPropertyMetadata.cs" />
@@ -180,6 +181,7 @@
     <Compile Include="Core\RoleDetail.cs" />
     <Compile Include="Core\UserDetail.cs" />
     <Compile Include="Core\RoleSummary.cs" />
+    <Compile Include="Extensions\ExternalLoginExtensions.cs" />
     <Compile Include="Extensions\ClaimsExtensions.cs" />
     <Compile Include="Extensions\ModelStateDictionaryExtensions.cs" />
     <Compile Include="Extensions\IdentityManagerResultExtensions.cs" />
@@ -215,6 +217,10 @@
     </Content>
     <EmbeddedResource Include="Assets\Content\logo.jpg" />
     <EmbeddedResource Include="Assets\Content\logo.png" />
+    <EmbeddedResource Include="Assets\Scripts\Bundle.js" />
+    <Content Include="Assets\Scripts\Bundle.min.js">
+      <DependentUpon>Bundle.js</DependentUpon>
+    </Content>
     <Content Include="Assets\Scripts\Libs\oidc-token-manager.min.js" />
     <EmbeddedResource Include="Assets\Templates\users\accessdenied.html" />
     <EmbeddedResource Include="Assets\Templates\roles\new.html" />
@@ -242,9 +248,6 @@
     <Content Include="Assets\Scripts\App\ttIdmRoles.js" />
     <Content Include="Assets\Scripts\App\ttIdmUsers.js" />
     <Content Include="Assets\Scripts\App\ttIdmUI.js" />
-    <EmbeddedResource Include="Assets\Scripts\Bundle.js">
-      <DependentUpon>Bundle.js.bundle</DependentUpon>
-    </EmbeddedResource>
     <Content Include="Assets\Scripts\Libs\angular-route.min.js" />
     <Content Include="Assets\Scripts\Libs\angular.min.js" />
     <Content Include="Assets\Scripts\Libs\bootstrap.min.js" />
@@ -256,8 +259,11 @@
     <EmbeddedResource Include="Resources\Messages.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Messages.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <None Include="app.config" />
+    <None Include="Assets\Scripts\Bundle.js.bundle" />
+    <None Include="bundleconfig.json" />
     <None Include="packages.config" />
     <None Include="..\default.licenseheader">
       <Link>default.licenseheader</Link>
@@ -314,7 +320,6 @@
     <EmbeddedResource Include="Assets\Content\fonts\glyphicons-halflings-regular.ttf" />
     <EmbeddedResource Include="Assets\Content\fonts\glyphicons-halflings-regular.woff" />
     <None Include="Assets\Content\Style.less" />
-    <None Include="Assets\Scripts\Bundle.js.bundle" />
     <None Include="IdentityManager.nuspec" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

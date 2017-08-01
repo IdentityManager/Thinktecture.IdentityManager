@@ -151,6 +151,24 @@
                 }, feedback.errorHandler);
         };
 
+        $scope.addExternalLogin = function (externalLogins, externalLogin) {
+            idmUsers.addExternalLogin(externalLogins, externalLogin)
+                .then(function () {
+                    feedback.message = "External Login Added : " + externalLogin.provider + ", " + externalLogin.providerId;
+                    loadUser();
+                }, feedback.errorHandler);
+        };
+
+        $scope.removeExternalLogin = function (externalLogin) {
+            idmUsers.removeExternalLogin(externalLogin)
+                .then(function () {
+                    feedback.message = "External Login Removed : " + externalLogin.data.provider + ", " + externalLogin.data.providerId;
+                    loadUser().then(function () {
+                        $scope.externalLogin = claim.externalLogin;
+                    });
+                }, feedback.errorHandler);
+        };
+
         $scope.deleteUser = function (user) {
             idmUsers.deleteUser(user)
                 .then(function () {
